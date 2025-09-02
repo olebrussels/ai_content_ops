@@ -1,0 +1,162 @@
+## Content Strategy and SEO Strategy
+
+
+### At the core of the content strategy: the business value of genai
+
+The content strategy moves forward the company mission to provide organizations with a better relationships with tech tools based on trust, transparency and comprehension. The aim is to infuse a curious mindset to explore, inspect, repair and unsderstand tools used.
+
+Our goal is to talk about how can SME's deliver better services with digital automation. Understand how GenAI can support business ambitions. Educate management and teams on genai transformative potential, technical and organizational considerations and risks.
+
+Advice on the latest LLM developments, emerging technologies and key industry players. ensuring management is informed by the latest genai innovations_
+
+
+
+
+
+### Content design 
+
+
+#### Editorial
+
+##### Editorial mission
+
+Our goal is to talk about the business value of AI and automation.  How can SME's deliver better services with digital automation
+
+Educate management and teams on genai transformative potential, technical and organizational considerations and risks.
+
+
+##### values
+same values as in the company strategy {ai_output_strategy_V1.mkd}
+
+
+##### substance
+The substance is the what : what topics are you going to be talking about. 
+
+UseCases: We are going to be showcasing some business that have used ai to generate business value and become more efficient.<br>
+We are going to be sharing tools and good practices. <br>
+Food for thought. Reflections on ethics.
+Promoting courses. 
+We are going to be sharing tutorials on how to do certain things<br>
+Failed experiments. we are going to be sharing things that did not work.<br>
+Risks around ai implementation. <br>
+
+
+
+
+##### what makes your website unique? 
+What idea or product do you ‘sell’ ?
+
+We encourage our readers to stay curious, explore and build capacity to move from SAAS to custom apps. Empower smes with learning and becoming a bit more tech savy and proficient each day. one step at a time. 
+
+We are software agnostic. We dont sell a specific brand or platform. We encourage our clients to actually code more and develop their tools inhouse. it's a journey towards more freedom. 
+
+The agency believes in promoting a healthier interdependence with tech tools, freeing up time for SMEs through process automation, and liberating time through AI for SMEs.
+
+And why should people buy this from you? I have done a personal journey towards coding and self hosting. 
+
+#### Tone of voice
+how do we feel about our message? 
+because we are passionate about what we do , we want our tone to sound enthusiastic about what we are doing. 
+
+because we are big kids we are playful. we want to break the stablished patterns and look at things with new eyes. we are irreverent. 
+
+this is a one man company. the owner is a trained lawyer and appreciates precise wording and formality.  we want to say words with precission. always focusing on less words but ensuring that value is delivered in every sentence and paragraph. 
+
+we accept jokes but we can live without them. 
+
+##### Content guidelines
+??
+
+
+#### Experience
+
+##### user needs
+Customers who are already frustrated with their current tools and hungry for change. Look for businesses where the owner's eyes light up when you mention 'getting their life back'.
+
+Can we break it down into different segments?
+
+Different audiences will use different keywords to search for info according to their level of knowledge of a particular topic.
+
+##### customer journey
+
+##### searching strategy of our audience
+What searching strategies do they have
+
+##### Business goals
+Content is going to get us closer to our clients. And helps us to achieve our mission to make money and drive AI adoption, upskilling efforts and culture shifts
+
+
+### System Design
+
+#### Structure
+
+##### High Level Keywords (High Competition)
+
+artificial intelligence
+business automation
+digital transformation
+AI solutions
+process automation
+
+##### Long Tail Keywords
+
+how to implement AI in small business workflows
+genai automation tools for SME efficiency
+custom AI solutions vs SaaS platforms
+business process automation for small companies
+AI implementation risks and considerations for SMEs
+
+##### Top of Funnel Keywords
+
+what is business automation
+AI benefits for small business
+digital transformation guide
+automation vs manual processes
+GenAI business applications
+
+##### Middle Funnel Keywords
+
+AI automation consulting services
+business process optimization tools
+GenAI implementation strategy
+automation ROI for small business
+custom automation solutions
+
+##### Bottom Funnel Keywords
+
+hire AI automation consultant
+business automation implementation cost
+GenAI consulting services pricing
+automation consultancy near me
+custom AI solution development
+
+
+
+
+##### Other Keyword list
+requirements 
+deliverables
+ai solutions
+task backlog and planning
+tools
+llms
+prompt
+data
+innovation
+
+#### Processes
+We are going to have a single graph database that is going to keep track of my movements. Where i am . What i am hearing. Who i am meeting. 
+
+I need to be feeding data to this graph database with a recording tool and an agent that organizes this data into nodes. 
+
+All the AI agents are going to be pulling from this DB to create new content for the blog, the newsletter, etc. 
+
+
+
+### Sources to craft this strategy
+
+https://medium.com/brain-traffic-content-strategy/new-thinking-brain-traffics-content-strategy-quad-7e53277044a8
+
+read poppot
+https://docs.google.com/document/d/1zJm7JMwRAxupC5RRm77dSlTOxFJ2x7W1u-An5Of1JD4/edit?tab=t.0
+
