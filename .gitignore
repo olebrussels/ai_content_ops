@@ -9,8 +9,12 @@ uv.lock
 
 # databases
 # Ignore all .db files in data folder
-data/*.db
 data/
+
+# Audio files
+*.wav
+*.mp3
+*.m4a
 
 
 # Distribution / packaging

@@ -25,6 +25,7 @@ langgraph=sdk-0.2.4
 ormsgpack=1.10.0 
 xxhash=3.5.0
 pathlib=1.0.1
-
+watchdog==6.0.0
+assemblyai==0.43.1
 
 
