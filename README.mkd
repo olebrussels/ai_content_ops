@@ -1,0 +1,35 @@
+We are building an app that ....
+
+i have also created the local langgraph server in a folder called akai. i can just get in the folder (.venv) and run the server using laggraph dev. inspect the error messages
+
+
+# Audio File Journey Summary 📁→🎙️
+
+## What Happens Before AssemblyAI Transcription:
+
+### 1. **Phone Recording & Upload**
+- You record audio on your phone
+- Rename file with `blog_` prefix (e.g., `blog_meeting_notes.wav`)
+- Upload via Nextcloud app on phone
+
+### 2. **Nextcloud Sync Process**
+```
+Phone → Nextcloud Server → Local Nextcloud Client
+```
+- File appears in `/home/manuel/accion_new/Talk/`
+- **First**: Nextcloud creates temp file `.blog_meeting_notes.wav.~abc123`
+- **Then**: Nextcloud renames/moves temp file to final `blog_meeting_notes.wav`
+
+### 3. **File Monitor Detection**
+```
+👀 Watchdog monitors /home/manuel/accion_new/Talk/
+🔍 Detects CREATED event → Ignores (temp file)
+🔍 Detects MOVED event → Triggers! (final file)
+```
+
+### 4. **Pre-Processing Steps**
+```
+📁 Original: /home/manuel/accion_new/Talk/blog_meeting_notes.wav
+📋 Copy to: /Documents/tech/ai_content_ops/data/temp/blog_meeting_notes.wav
+🎯 Ready for AssemblyAI transcription
+```

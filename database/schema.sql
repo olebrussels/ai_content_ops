@@ -27,6 +27,9 @@ CREATE TABLE IF NOT EXISTS blog_post_ideas (
     
     -- Computed metrics
     total_score INTEGER,
+
+    -- Production tracking
+    sent_to_prod BOOLEAN DEFAULT 0,  -- NEW FIELD: 0 = false, 1 = true
     
     -- Optional: Store raw LLM output for debugging
     raw_llm_response TEXT,

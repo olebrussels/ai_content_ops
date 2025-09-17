@@ -55,6 +55,7 @@ class BlogPostIdeaCreate(BaseModel):
     collaboration_potential: int
     innovation: int
     difficulty: int
+    sent_to_prod: bool = False  # NEW FIELD: defaults to False
     raw_llm_response: Optional[str] = None
     
     @property
@@ -84,6 +85,7 @@ class BlogPostIdea(BaseModel):
     innovation: int
     difficulty: int
     total_score: int
+    sent_to_prod: bool  # NEW FIELD
     raw_llm_response: Optional[str]
     created_at: datetime
 

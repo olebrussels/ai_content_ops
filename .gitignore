@@ -16,6 +16,10 @@ data/
 *.mp3
 *.m4a
 
+# ignore studio files
+
+studio/
+akai/
 
 # Distribution / packaging
 .Python

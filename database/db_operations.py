@@ -110,6 +110,7 @@ class DatabaseManager:
                 idea.innovation,
                 idea.difficulty,
                 idea.total_score,
+                idea.sent_to_prod,  # NEW FIELD
                 idea.raw_llm_response
             ))
             conn.commit()
@@ -204,6 +205,36 @@ class DatabaseManager:
                 "idea_count": idea_count,
                 "top_ideas": top_ideas
             }
+        finally:
+            conn.close()
+
+
+# ADD NEW METHOD: Mark idea as sent to production
+    def mark_idea_sent_to_prod(self, idea_id: int):
+            """Mark a blog post idea as sent to production"""
+            conn = self.get_connection()
+            try:
+                cursor = conn.cursor()
+                cursor.execute(
+                    "UPDATE blog_post_ideas SET sent_to_prod = 1 WHERE id = ?",
+                    (idea_id,)
+                )
+                conn.commit()
+            finally:
+                conn.close()
+
+# ADD NEW METHOD: Get ideas not yet sent to prod
+    def get_pending_ideas(self, limit: int = 20) -> List[BlogPostIdea]:
+        """Get blog post ideas not yet sent to production"""
+        conn = self.get_connection()
+        try:
+            cursor = conn.cursor()
+            cursor.execute(
+                "SELECT * FROM blog_post_ideas WHERE sent_to_prod = 0 ORDER BY total_score DESC LIMIT ?",
+                (limit,)
+            )
+            rows = cursor.fetchall()
+            return [BlogPostIdea(**dict(row)) for row in rows]
         finally:
             conn.close()
 
