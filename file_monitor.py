@@ -15,105 +15,94 @@ class AudioFileHandler(FileSystemEventHandler):
     def __init__(self):
         # Ensure temp folder exists
         os.makedirs(TEMP_FOLDER, exist_ok=True)
+        print(f"📁 Temp folder ready: {TEMP_FOLDER}")
     
     def on_created(self, event):
-        """Handle new file creation"""
-        print(f"🔍 DEBUG: File CREATED: {event.src_path}")
-        self.handle_file_event(event.src_path, "CREATED")
+        """Handle new file creation (usually Nextcloud temp files)"""
+        if event.is_directory:
+            return
+        
+        filename = os.path.basename(event.src_path)
+        if self.is_nextcloud_temp_file(filename):
+            print(f"⏳ Nextcloud syncing: {filename}")
     
     def on_moved(self, event):
-        """Handle file moves/renames (Nextcloud often does this)"""
-        print(f"🔍 DEBUG: File MOVED: {event.src_path} -> {event.dest_path}")
-        self.handle_file_event(event.dest_path, "MOVED")
-    
-    def on_modified(self, event):
-        """Handle file modifications"""
-        print(f"🔍 DEBUG: File MODIFIED: {event.src_path}")
-        self.handle_file_event(event.src_path, "MODIFIED")
-    
-    def handle_file_event(self, file_path, event_type):
-        """Common handler for all file events"""
-        if os.path.isdir(file_path):
-            print(f"🔍 DEBUG: Ignoring directory: {file_path}")
+        """Handle file moves (Nextcloud temp → final file)"""
+        if os.path.isdir(event.dest_path):
             return
             
-        filename = os.path.basename(file_path)
-        print(f"🔍 DEBUG: Checking {event_type} file: {filename}")
+        filename = os.path.basename(event.dest_path)
+        print(f"📥 File synced: {filename}")
         
         if self.should_process_file(filename):
-            print(f"🎵 {event_type} audio file detected: {filename}")
-            # Wait a moment for file to finish copying/syncing
-            time.sleep(3)
-            self.process_audio_file(file_path, filename)
-        else:
-            print(f"🔍 DEBUG: File {filename} does not match criteria")
+            self.stage_audio_file(event.dest_path, filename)
+    
+    def is_nextcloud_temp_file(self, filename):
+        """Check if this is a Nextcloud temporary file"""
+        return (
+            filename.startswith('.') or 
+            '~' in filename or 
+            filename.endswith('.tmp')
+        )
     
     def should_process_file(self, filename):
-        """Check if file should trigger processing"""
+        """Check if file should be staged for processing"""
         name_lower = filename.lower()
         
-        print(f"🔍 DEBUG: Filename lower: '{name_lower}'")
-        
-        # Skip Nextcloud temporary files
-        if filename.startswith('.') or '~' in filename or filename.endswith('.tmp'):
-            print(f"🔍 DEBUG: Skipping temp/hidden file: {filename}")
+        # Must start with trigger prefix
+        if not name_lower.startswith(TRIGGER_PREFIX):
+            print(f"⏭️  Ignoring (no '{TRIGGER_PREFIX}' prefix): {filename}")
             return False
         
-        print(f"🔍 DEBUG: Starts with '{TRIGGER_PREFIX}': {name_lower.startswith(TRIGGER_PREFIX)}")
+        # Must be supported audio format
+        if not any(name_lower.endswith(ext) for ext in SUPPORTED_FORMATS):
+            print(f"⏭️  Ignoring (unsupported format): {filename}")
+            return False
         
-        # Check prefix and extension
-        has_trigger = name_lower.startswith(TRIGGER_PREFIX)
-        has_supported_ext = any(name_lower.endswith(ext) for ext in SUPPORTED_FORMATS)
-        
-        print(f"🔍 DEBUG: Has supported extension: {has_supported_ext}")
-        
-        return has_trigger and has_supported_ext
+        return True
     
-    def process_audio_file(self, source_path, filename):
-        """Process the audio file through our pipeline"""
+    def stage_audio_file(self, source_path, filename):
+        """Copy audio file to temp folder for processing"""
         try:
-            print(f"📂 Processing: {filename}")
+            print(f"🎵 Staging audio file: {filename}")
             
-            # Step 1: Copy to temp folder
+            # Copy to temp folder
             temp_path = os.path.join(TEMP_FOLDER, filename)
+            
+            # Check if file already exists in temp
+            if os.path.exists(temp_path):
+                print(f"⚠️  File already exists in temp, skipping: {filename}")
+                return
+            
+            # Wait a moment for file to finish syncing
+            time.sleep(2)
+            
+            # Copy file
             shutil.copy2(source_path, temp_path)
-            print(f"✅ Copied to temp: {temp_path}")
+            print(f"✅ Staged to temp: {temp_path}")
             
-            # Step 2: Process through pipeline (placeholder for now)
-            self.run_processing_pipeline(temp_path, filename)
+            # Get file info
+            size_mb = os.path.getsize(temp_path) / (1024 * 1024)
+            print(f"📊 File size: {size_mb:.1f} MB")
             
-            # Step 3: Cleanup - delete both files
-            os.remove(source_path)  # Delete from Talk folder
-            os.remove(temp_path)    # Delete from temp folder
-            print(f"🗑️ Cleaned up files for: {filename}")
+            # Remove original from Talk folder (keep Nextcloud clean)
+            os.remove(source_path)
+            print(f"🗑️ Removed original from: {WATCH_FOLDER}")
+            
+            print(f"🎯 Ready for processing: {filename}")
             
         except Exception as e:
-            print(f"❌ Error processing {filename}: {e}")
-    
-    def run_processing_pipeline(self, audio_path, filename):
-        """Run the full processing pipeline"""
-        print(f"🔄 Starting pipeline for: {filename}")
-        
-        # TODO: Implement actual pipeline
-        # 1. AssemblyAI transcription
-        # 2. LLM blog idea generation  
-        # 3. Save to database
-        
-        # For now, just simulate processing
-        print(f"🎙️ [PLACEHOLDER] Transcribing audio...")
-        time.sleep(1)
-        print(f"🤖 [PLACEHOLDER] Generating blog ideas...")
-        time.sleep(1)
-        print(f"💾 [PLACEHOLDER] Saving to database...")
-        print(f"✅ Pipeline completed for: {filename}")
+            print(f"❌ Error staging {filename}: {e}")
 
 def start_monitoring():
     """Start the file monitoring system"""
-    print(f"👀 Starting file monitor...")
-    print(f"📁 Watching folder: {WATCH_FOLDER}")
-    print(f"🎯 Trigger pattern: {TRIGGER_PREFIX}*.{SUPPORTED_FORMATS}")
-    print(f"📦 Temp folder: {TEMP_FOLDER}")
-    print("🔄 Press Ctrl+C to stop")
+    print("🎙️ Audio File Monitor")
+    print("=" * 40)
+    print(f"👀 Watching: {WATCH_FOLDER}")
+    print(f"🎯 Trigger: {TRIGGER_PREFIX}*{SUPPORTED_FORMATS}")
+    print(f"📦 Staging: {TEMP_FOLDER}")
+    print(f"🔄 Press Ctrl+C to stop")
+    print()
     
     # Create event handler and observer
     event_handler = AudioFileHandler()
@@ -133,5 +122,35 @@ def start_monitoring():
     observer.join()
     print("👋 File monitor stopped")
 
+def list_staged_files():
+    """Utility function to list files in temp folder"""
+    import glob
+    
+    print(f"📁 Files staged in {TEMP_FOLDER}:")
+    
+    audio_files = []
+    for ext in SUPPORTED_FORMATS:
+        pattern = os.path.join(TEMP_FOLDER, f"*{ext}")
+        audio_files.extend(glob.glob(pattern))
+    
+    if audio_files:
+        for file_path in sorted(audio_files):
+            filename = os.path.basename(file_path)
+            size_mb = os.path.getsize(file_path) / (1024 * 1024)
+            print(f"   🎵 {filename} ({size_mb:.1f} MB)")
+        print(f"\n📊 Total: {len(audio_files)} files ready for processing")
+    else:
+        print("   (No audio files found)")
+    
+    return audio_files
+
 if __name__ == "__main__":
-    start_monitoring()
+    import sys
+    
+    if len(sys.argv) > 1 and sys.argv[1] == "list":
+        # python file_monitor.py list
+        list_staged_files()
+    else:
+        # python file_monitor.py (default: start monitoring)
+        start_monitoring()
+

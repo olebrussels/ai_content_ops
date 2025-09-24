@@ -10,7 +10,8 @@ i have also created the local langgraph server in a folder called akai. i can ju
 ### 1. **Phone Recording & Upload**
 - You record audio on your phone
 - Rename file with `blog_` prefix (e.g., `blog_meeting_notes.wav`)
-- Upload via Nextcloud app on phone
+- keep them on my phone for batch processing.
+- Batch Upload via Nextcloud app on phone
 
 ### 2. **Nextcloud Sync Process**
 ```
@@ -25,11 +26,12 @@ Phone → Nextcloud Server → Local Nextcloud Client
 👀 Watchdog monitors /home/manuel/accion_new/Talk/
 🔍 Detects CREATED event → Ignores (temp file)
 🔍 Detects MOVED event → Triggers! (final file)
+Deletes the file in /home/manuel/accion_new/Talk/. 
 ```
 
 ### 4. **Pre-Processing Steps**
 ```
 📁 Original: /home/manuel/accion_new/Talk/blog_meeting_notes.wav
 📋 Copy to: /Documents/tech/ai_content_ops/data/temp/blog_meeting_notes.wav
-🎯 Ready for AssemblyAI transcription
+🎯 Ready for AssemblyAI transcription in test_langgraph.ipynb pipeline
 ```
