@@ -35,3 +35,11 @@ Deletes the file in /home/manuel/accion_new/Talk/.
 📋 Copy to: /Documents/tech/ai_content_ops/data/temp/blog_meeting_notes.wav
 🎯 Ready for AssemblyAI transcription in test_langgraph.ipynb pipeline
 ```
+
+### 5 Save transcript into conversation table
+
+### 6 a node extracts pains , key insights 
+an llm with structured data extraction. saves to langgraph state
+
+### 7 a node generates blog posts ideas 
+Generate scored blog ideas from  extracted data. saves to blog post ideas table. 
