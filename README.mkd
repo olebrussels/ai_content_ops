@@ -23,6 +23,11 @@ Phone → Nextcloud Server → Local Nextcloud Client
 
 ### 3. **File Monitor Detection**
 ```
+start the watchdog . go to .venv with source .venv/bin/activate
+python file_monitor.py
+
+
+
 👀 Watchdog monitors /home/manuel/accion_new/Talk/
 🔍 Detects CREATED event → Ignores (temp file)
 🔍 Detects MOVED event → Triggers! (final file)
