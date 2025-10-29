@@ -11,49 +11,52 @@
 - Ecology/ Permaculture
 - Innovation rooted in real human needs
 - Entrepreneurship
-- Feminism
+- Feminist IT
 - Care
 - Work Smart. Not hard on yourself
 
 ## Vision
 
-The agency aims to focus on data literacy, computer literacy, technical culture, 
-culture of care and reparation, adaptive learning, and living systems.
+Our agency envisions a future where tech tools hold significant weight in company decisions surrounding transformation. Our agency envisions a future where tech tools are regarded not merely as operational facilities but as allies in driving a company’s and world transformation. __We are committed to helping organizations recognize and nurture this alliance__ to accelerate their evolution towards a more conscious relationship with people and planet.
 
-It's a cloud native agency with a focus on clean tech and reducing impact. 
+Our aspiration is to __shift the balance of power within the tech landscape__, moving away from the illusion of unlimited growth, towards a decentralized, sovereign feminist model based on principles of care and respect for the humans and the planet underlying our technology.
 
-### I dont code for others but i code for myself
-It is an AI powered agency. This means: we put in place agentic workflows to reapeat every task we do.  This agentic workflows get better every time we have a new client and repeat the process.
+The agency places a strong focus on data literacy, computer literacy, technical culture, 
+culture of care and reparation, adaptive learning, open source and sovereign digital infrastructure.
 
-We have a network of trusted developpers *langchain meetup.
+
 
 ### Our why?  
-The agency believes in promoting a healthier interdependence with tech tools, freeing up time for SMEs through process automation, and liberating time through AI for SMEs.
+
+We believe in driving healthier relationships between SME workers and their tech tools. Our concern is not just the tools themselves, but how they shape practices. We are committed to aiding businesses in liberating time through process automation and AI, allowing for better human connections and reducing the burnout caused by systems designed for endless engagement. Our objective is to infuse organizations with a mindset that inspires curiosity, exploration, comprehension and the courage to repair – to interrogate not only how our tools work, but how they affect the world around us.
+
 
 ### Our juste cause 
-The agency's cause is to provide organizations with a better relationship with tech tools 
-based on trust, transparency, and comprehension. 
-They aim to infuse a curious mindset to explore, inspect, repair, and understand the tools used.
+
+Our cause is centered around educating SMEs about the __intimate connection between tech tools and their social/environmental impact__. We aim to guide businesses in a co-evolution with technology, fostering an environment of critique and understanding of the power dynamics behind these tools. As such, we ensure their tech "stack" transforms in unison with organizational changes, shaping meaningful connections and responsible practices.
 
 ## The mission
 
 ### The things we try to change (strategic objectives)
 
 - Save time through automation (work smarter).
-- Save money in SAAS. the more you "code" the less you "pay". 
-- Make employees happier by enhancing their tech understanding.
+- Save money in SAAS. Move away from cloud giants and towards self-hosed collaboration aps.  
+- Make employees happier by enhancing their conscious tech understanding.
 
 ### What we do
 The agency observes organizational processes, identifies automation 
-opportunities, selects tools, provides training, 
+opportunities, selects tools, provides cool training that raise awareness, 
 suggests solutions, and implements them. 
 The impact is saving time and increasing employees happiness. Increasing human connection time. 
 
 #### Ideal mission 
 - Design research
-- Team workshops to identify AI and automation opportunities
+- Team workshops to identify AI and automation opportunities. and raise awareness of tech tools.
 - Build automation flow: custom scripts or integrations with saas apps
 - Training sessions
+
+##### long term
+i want to build digital tech infrastructures that archive and nurture information and knowledge with a good ux
 
 ### What we don't do
 The agency does not engage in alienating jobs or activities 
@@ -72,6 +75,7 @@ The agency operates based on feminist values of caring, repair, and curiosity. T
 - Cross-sector and cross-department understanding
 - Horizontal view of the organization
 - Design approach
+- The founder has a personal journey of transformation both in IT and personal development.
 - Training for building autonomy and capacity within the team
 
 ## Marketing strategy
@@ -102,6 +106,7 @@ We are going to try to get demo clients. We are going to target all people we kn
 #### Training Orgs
 Digital literacy. Well being at the workspace.
 Tech literacy orgs ex: tactic
+mautic segment "education"
 
 #### sme's target ideas
 management consultants
