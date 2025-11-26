@@ -1,6 +1,6 @@
 import sqlite3
 import os
-from typing import List, Optional
+from typing import List, Optional, Dict, Any
 from datetime import datetime
 from .models import (
     Conversation, ConversationCreate, 
@@ -92,29 +92,45 @@ class DatabaseManager:
         conn = self.get_connection()
         try:
             cursor = conn.cursor()
+            
+            # Calculate total_score (not in the model, computed here)
+            total_score = (
+                idea.usefulness_potential +
+                idea.fitwith_seo_strategy +
+                idea.fitwith_content_strategy +
+                idea.inspiration_potential +
+                idea.collaboration_potential +
+                idea.innovation +
+                idea.difficulty
+            )
+            
+            # INSERT with 13 columns (12 from model + 1 calculated)
             cursor.execute("""
                 INSERT INTO blog_post_ideas 
-                (conversation_id, title, description, usefulness_potential, 
-                 fitwith_seo_strategy, fitwith_content_strategy, inspiration_potential,
-                 collaboration_potential, innovation, difficulty, total_score, raw_llm_response)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                (conversation_id, title, description, 
+                 usefulness_potential, fitwith_seo_strategy, fitwith_content_strategy,
+                 inspiration_potential, collaboration_potential, innovation, difficulty,
+                 total_score, sent_to_prod, raw_llm_response)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """, (
-                idea.conversation_id,
-                idea.title,
-                idea.description,
-                idea.usefulness_potential,
-                idea.fitwith_seo_strategy,
-                idea.fitwith_content_strategy,
-                idea.inspiration_potential,
-                idea.collaboration_potential,
-                idea.innovation,
-                idea.difficulty,
-                idea.total_score,
-                idea.sent_to_prod,  # NEW FIELD
-                idea.raw_llm_response
+                idea.conversation_id,           # 1
+                idea.title,                     # 2
+                idea.description,               # 3
+                idea.usefulness_potential,      # 4
+                idea.fitwith_seo_strategy,      # 5
+                idea.fitwith_content_strategy,  # 6
+                idea.inspiration_potential,     # 7
+                idea.collaboration_potential,   # 8
+                idea.innovation,                # 9
+                idea.difficulty,                # 10
+                total_score,                    # 11 (CALCULATED)
+                idea.sent_to_prod,              # 12
+                idea.raw_llm_response           # 13
             ))
+            
             conn.commit()
             return cursor.lastrowid
+            
         finally:
             conn.close()
     
@@ -159,11 +175,39 @@ class DatabaseManager:
         finally:
             conn.close()
     
+    def mark_idea_sent_to_prod(self, idea_id: int) -> bool:
+        """Mark a blog post idea as sent to production"""
+        conn = self.get_connection()
+        try:
+            cursor = conn.cursor()
+            cursor.execute(
+                "UPDATE blog_post_ideas SET sent_to_prod = 1 WHERE id = ?",
+                (idea_id,)
+            )
+            conn.commit()
+            return cursor.rowcount > 0  # Return True if a row was updated
+        finally:
+            conn.close()
+    
+    def get_pending_ideas(self, limit: int = 20) -> List[BlogPostIdea]:
+        """Get blog post ideas not yet sent to production"""
+        conn = self.get_connection()
+        try:
+            cursor = conn.cursor()
+            cursor.execute(
+                "SELECT * FROM blog_post_ideas WHERE sent_to_prod = 0 ORDER BY total_score DESC LIMIT ?",
+                (limit,)
+            )
+            rows = cursor.fetchall()
+            return [BlogPostIdea(**dict(row)) for row in rows]
+        finally:
+            conn.close()
+    
     # =================================
     # COMBINED QUERIES
     # =================================
     
-    def get_conversation_with_ideas(self, conversation_id: int) -> Optional[dict]:
+    def get_conversation_with_ideas(self, conversation_id: int) -> Optional[Dict[str, Any]]:
         """Get conversation and all its ideas together"""
         conversation = self.get_conversation(conversation_id)
         if not conversation:
@@ -178,7 +222,7 @@ class DatabaseManager:
             "best_score": max([idea.total_score for idea in ideas], default=0)
         }
     
-    def get_dashboard_data(self) -> dict:
+    def get_dashboard_data(self) -> Dict[str, Any]:
         """Get overview data for dashboard"""
         conn = self.get_connection()
         try:
@@ -208,35 +252,6 @@ class DatabaseManager:
         finally:
             conn.close()
 
-
-# ADD NEW METHOD: Mark idea as sent to production
-    def mark_idea_sent_to_prod(self, idea_id: int):
-            """Mark a blog post idea as sent to production"""
-            conn = self.get_connection()
-            try:
-                cursor = conn.cursor()
-                cursor.execute(
-                    "UPDATE blog_post_ideas SET sent_to_prod = 1 WHERE id = ?",
-                    (idea_id,)
-                )
-                conn.commit()
-            finally:
-                conn.close()
-
-# ADD NEW METHOD: Get ideas not yet sent to prod
-    def get_pending_ideas(self, limit: int = 20) -> List[BlogPostIdea]:
-        """Get blog post ideas not yet sent to production"""
-        conn = self.get_connection()
-        try:
-            cursor = conn.cursor()
-            cursor.execute(
-                "SELECT * FROM blog_post_ideas WHERE sent_to_prod = 0 ORDER BY total_score DESC LIMIT ?",
-                (limit,)
-            )
-            rows = cursor.fetchall()
-            return [BlogPostIdea(**dict(row)) for row in rows]
-        finally:
-            conn.close()
 
 # Global instance
 db = DatabaseManager()
